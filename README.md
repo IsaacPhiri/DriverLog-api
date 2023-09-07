@@ -34,3 +34,33 @@ This is a REST API for the DriverLog application. It is built using Node.js, Exp
 ### Vehicles
 - GET/POST: /api/vehicles - Get all vehicles / Create a new vehicle
 - GET/POST/DELETE: /api/vehicles/:id - Get a vehicle by id / Update a vehicle by id / Delete a vehicle by id
+
+## Installation
+1. Clone the repository
+2. Install dependencies
+```bash
+npm install
+```
+3. Create a .env file in the root directory and add the following environment variables
+```bash
+PORT=3000
+MONGODB_URI=<your mongodb uri>
+NODE_ENV=development
+TOKEN_SECRET=<your token secret>
+```
+4. Run the application
+```bash
+npm run server
+```
+## Usage
+The API is used by the DriverLog application to store and retrieve data. The API is also used by the DriverLog website to retrieve data.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## Author
+[Isaac Phiri](https://github.com/IaacPhiri)
+
+## Acknowledgements
+- [Holberton School](https://www.holbertonschool.com/)
+- [DriverLog](
