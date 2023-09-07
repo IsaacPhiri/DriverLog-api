@@ -81,7 +81,7 @@ const createAdmin = asyncHandler(async (req, res) => {
 const updateAdmin = asyncHandler(async (req, res) => {
     try {
       const { id } = req.params;
-      const { companyName, companyEmail, password, companyRegNo, companyAddress } = req.body;
+      const { companyName, companyEmail, password, companyRegNo, companyContactNo, companyAddress } = req.body;
   
       // Find the admin user by ID
       const admin = await Admin.findById(id);
@@ -102,7 +102,6 @@ const updateAdmin = asyncHandler(async (req, res) => {
   
       res.json({ message: 'Admin user updated successfully' });
     } catch (error) {
-      console.log(error);
       res.status(500);
       throw new Error('Internal server error');
     }
