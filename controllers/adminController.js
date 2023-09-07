@@ -93,6 +93,7 @@ const updateAdmin = asyncHandler(async (req, res) => {
       admin.companyName = companyName || admin.companyName;
       admin.companyEmail = companyEmail || admin.companyEmail;
       admin.companyRegNo = companyRegNo || admin.companyRegNo;
+      admin.companyContactNo = companyContactNo || admin.companyContactNo;
       admin.companyAddress = companyAddress || admin.companyAddress;
       admin.password = await bcrypt.hash(password, 10);
   
@@ -101,6 +102,7 @@ const updateAdmin = asyncHandler(async (req, res) => {
   
       res.json({ message: 'Admin user updated successfully' });
     } catch (error) {
+      console.log(error);
       res.status(500);
       throw new Error('Internal server error');
     }
