@@ -12,11 +12,9 @@ This is a REST API for the DriverLog application. It is built using Node.js, Exp
 
 ### Admin
 - GET: /api/admin - Get all admins
-- GET: /api/admin/:id - Get an admin by id
-- PUT: /api/admin/:id - Update an admin by id
-- DELETE: /api/admin/:id - Delete an admin by id
 - POST: /api/admin/create-admin - Create a new admin
 - GET: /api/admin/me - Get the current admin
+- GET/PUT/DELETE: /api/admin/:id - Get an admin by id / Update an admin by id / Delete an admin by id
 
 ### Auth
 - POST: /api/auth/signin-admin - Sign in as an admin
@@ -25,15 +23,15 @@ This is a REST API for the DriverLog application. It is built using Node.js, Exp
 
 ### DutySatus
 - GET/POST: /api/dutystatus - Get all duty statuses / Create a new duty status
-- GET/POST/DELETE: /api/dutystatus/:id - Get a duty status by id / Update a duty status by id / Delete a duty status by id
+- GET/PUT/DELETE: /api/dutystatus/:id - Get a duty status by id / Update a duty status by id / Delete a duty status by id
 
 ### Logentries
 - GET/POST: /api/logentries - Get all log entries / Create a new log entry
-- GET/POST/DELETE: /api/logentries/:id - Get a log entry by id / Update a log entry by id / Delete a log entry by id
+- GET/PUT/DELETE: /api/logentries/:id - Get a log entry by id / Update a log entry by id / Delete a log entry by id
 
 ### Vehicles
 - GET/POST: /api/vehicles - Get all vehicles / Create a new vehicle
-- GET/POST/DELETE: /api/vehicles/:id - Get a vehicle by id / Update a vehicle by id / Delete a vehicle by id
+- GET/PUT/DELETE: /api/vehicles/:id - Get a vehicle by id / Update a vehicle by id / Delete a vehicle by id
 
 ## Installation
 1. Clone the repository
