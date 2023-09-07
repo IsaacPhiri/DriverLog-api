@@ -3,6 +3,34 @@
 This is a REST API for the DriverLog application. It is built using Node.js, Express.js, and MongoDB. It is hosted on Render. The API is used by the DriverLog application to store and retrieve data. The API is also used by the DriverLog website to retrieve data.
 
 ## Endpoints
-### /api/drivers
-#### GET
-Returns a list of all drivers in the database.
+### Drivers
+- GET: /api/drivers - Get all drivers
+- POST: /api/drivers/signup-driver - Create a new driver
+- GET: /api/drivers/me - Get the current driver
+- GET: /api/drivers/profile - Get the current driver's profile
+- GET/PUT/DELETE: /api/drivers/:id - Get a driver by id / Update a driver by id /Delete a driver by id
+
+### Admin
+- GET: /api/admin - Get all admins
+- GET: /api/admin/:id - Get an admin by id
+- PUT: /api/admin/:id - Update an admin by id
+- DELETE: /api/admin/:id - Delete an admin by id
+- POST: /api/admin/create-admin - Create a new admin
+- GET: /api/admin/me - Get the current admin
+
+### Auth
+- POST: /api/auth/signin-admin - Sign in as an admin
+- POST: /api/auth/signin-driver - Sign in as a driver
+- POST: /api/auth/logout - Logout
+
+### DutySatus
+- GET/POST: /api/dutystatus - Get all duty statuses / Create a new duty status
+- GET/POST/DELETE: /api/dutystatus/:id - Get a duty status by id / Update a duty status by id / Delete a duty status by id
+
+### Logentries
+- GET/POST: /api/logentries - Get all log entries / Create a new log entry
+- GET/POST/DELETE: /api/logentries/:id - Get a log entry by id / Update a log entry by id / Delete a log entry by id
+
+### Vehicles
+- GET/POST: /api/vehicles - Get all vehicles / Create a new vehicle
+- GET/POST/DELETE: /api/vehicles/:id - Get a vehicle by id / Update a vehicle by id / Delete a vehicle by id
