@@ -41,7 +41,7 @@ const getAdmins = asyncHandler(async (req, res) => {
 });
 
 const createAdmin = asyncHandler(async (req, res) => {
-  let { companyName, companyEmail, password } = req.body;
+  let { companyName, companyEmail, companyContactNo, password } = req.body;
   let errors = [];
   if (!companyName) {
     errors.push({ companyName: "required" });
@@ -60,7 +60,7 @@ const createAdmin = asyncHandler(async (req, res) => {
   }
 
   try{
-    const existingAdmin = await Admin.findOne();
+    const existingAdmin = await Admin.findOne({ companyEmail: companyEmail });
     if (existingAdmin) {
       return res.status(400).json({ error: 'Admin user already exists' });
     } else {
@@ -77,6 +77,7 @@ const createAdmin = asyncHandler(async (req, res) => {
     res.status(201).json(createdAdmin);
   }
 } catch (error) {
+  console.log(error);
   res.status(500);
   throw new Error('Internal server error');
 }
