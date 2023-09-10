@@ -84,31 +84,33 @@ const createAdmin = asyncHandler(async (req, res) => {
 });
 
 const updateAdmin = asyncHandler(async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { companyName, companyEmail, password, companyRegNo, companyAddress } = req.body;
+  const { id } = req.params;
+    const { companyName, companyEmail, companyContactNo, companyRegNo, companyAddress, password } = req.body;
   
-      // Find the admin user by ID
-      const admin = await Admin.findById(id);
-      if (!admin) {
-        return res.status(404).throw(new Error('Admin user not found'));
+    // Find the admin user by ID
+    const admin = await Admin.findById(req.user.id);
+    if (!admin) {
+      res.status(404);
+      throw new Error('Admin user not found');
+    } else {
+      try {
+        // Update the admin user properties
+        admin.companyName = companyName || admin.companyName;
+        admin.companyEmail = companyEmail || admin.companyEmail;
+        admin.companyContactNo = companyContactNo || admin.companyContactNo;
+        admin.companyRegNo = companyRegNo || admin.companyRegNo;
+        admin.companyAddress = companyAddress || admin.companyAddress;
+        admin.password = await bcrypt.hash(password, 10);
+    
+        // Save the updated admin user to the database
+        await admin.save();
+    
+        res.json({ message: 'Admin user updated successfully' });
+      } catch (error) {
+        console.log(error); 
+        res.status(500);
+        throw new Error('Internal server error');
       }
-  
-      // Update the admin user properties
-      admin.companyName = companyName || admin.companyName;
-      admin.companyEmail = companyEmail || admin.companyEmail;
-      admin.companyContactNo = companyContactNo || admin.companyContactNo;
-      admin.companyRegNo = companyRegNo || admin.companyRegNo;
-      admin.companyAddress = companyAddress || admin.companyAddress;
-      admin.password = await bcrypt.hash(password, 10);
-  
-      // Save the updated admin user to the database
-      await admin.save();
-  
-      res.json({ message: 'Admin user updated successfully' });
-    } catch (error) {
-      res.status(500);
-      throw new Error('Internal server error');
     }
   });
 
