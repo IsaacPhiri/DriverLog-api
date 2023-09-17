@@ -68,48 +68,48 @@ const createDriver = asyncHandler(async (req, res) => {
         password,
         password_confirmation
     } = req.body;
-    // let errors = [];
-    // if (!firstName) {
-    //     errors.push({ firstName: "required" });
-    // }
-    // if (!lastName) {
-    //     errors.push({ lastName: "required" });
-    // }
-    // if (!licenseNumber) {
-    //     errors.push({ licenseNumber: "required" });
-    // }
-    // if (!nationalId) {
-    //     errors.push({ nationalId: "required" });
-    // }
-    // if (!contactNumber) {
-    //     errors.push({ contactNumber: "required" });
-    // }
-    // if (!email) {
-    //     errors.push({ email: "required" });
-    // }
-    // if (!emailRegexp.test(email)) {
-    //     errors.push({ email: "invalid" });
-    // }
-    // if (!homeAddress) {
-    //     errors.push({ homeAddress: "required" });
-    // }
-    // if (!licenseExpiryDate) {
-    //     errors.push({ licenseExpiryDate: "required" });
-    // }
-    // if (!password) {
-    //     errors.push({ password: "required" });
-    // }
-    // if (!password_confirmation) {
-    //     errors.push({
-    //         password_confirmation: "required",
-    //     });
-    // }
-    // if (password !== password_confirmation) {
-    //     errors.push({ password: "passwords don't match" });
-    // }
-    // if (errors.length > 0) {
-    //     return res.status(422).json({ errors: errors });
-    // }
+    let errors = [];
+    if (!firstName) {
+        errors.push({ firstName: "required" });
+    }
+    if (!lastName) {
+        errors.push({ lastName: "required" });
+    }
+    if (!licenseNumber) {
+        errors.push({ licenseNumber: "required" });
+    }
+    if (!nationalId) {
+        errors.push({ nationalId: "required" });
+    }
+    if (!contactNumber) {
+        errors.push({ contactNumber: "required" });
+    }
+    if (!email) {
+        errors.push({ email: "required" });
+    }
+    if (!emailRegexp.test(email)) {
+        errors.push({ email: "invalid" });
+    }
+    if (!homeAddress) {
+        errors.push({ homeAddress: "required" });
+    }
+    if (!licenseExpiryDate) {
+        errors.push({ licenseExpiryDate: "required" });
+    }
+    if (!password) {
+        errors.push({ password: "required" });
+    }
+    if (!password_confirmation) {
+        errors.push({
+            password_confirmation: "required",
+        });
+    }
+    if (password !== password_confirmation) {
+        errors.push({ password: "passwords don't match" });
+    }
+    if (errors.length > 0) {
+        return res.status(422).json({ errors: errors });
+    }
     const existingDriver = await Driver.findOne({ email: email });
         if (existingDriver) {
             res.status(400);
@@ -152,7 +152,7 @@ const createDriver = asyncHandler(async (req, res) => {
 });    
 
 const updateDriver = asyncHandler(async (req, res) => {
-    const driver = await Driver.findById(req.user._id);
+    const driver = await Driver.findById(req.params.id || req.user._id);
     
     if (driver) {
       driver.firstName = req.body.firstName || driver.firstName;
