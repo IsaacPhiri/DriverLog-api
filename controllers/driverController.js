@@ -142,7 +142,7 @@ const createDriver = asyncHandler(async (req, res) => {
                 email: driver.email,
                 homeAddress: driver.homeAddress,
                 licenseExpiryDate: driver.licenseExpiryDate,
-                role: driver.role,
+                role: driver.role
             });
     } catch (err) {
         console.log(err);
