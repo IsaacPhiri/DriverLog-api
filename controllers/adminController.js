@@ -60,9 +60,9 @@ const createAdmin = asyncHandler(async (req, res) => {
   }
 
   try {
-    const existingAdmin = await Admin.findOne();
+    const existingAdmin = await Admin.findOne({ companyEmail: companyEmail});
     if (existingAdmin) {
-      return res.status(400).json({ error: 'Admin user already exists' });
+      return res.status(400).json({ error: 'Admin user with this email already exists' });
     } else {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
