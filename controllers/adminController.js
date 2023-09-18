@@ -41,7 +41,7 @@ const getAdmins = asyncHandler(async (req, res) => {
 });
 
 const createAdmin = asyncHandler(async (req, res) => {
-  let { name, email, ContactNo, password } = req.body;
+  let { name, email, contactNo, password } = req.body;
   let errors = [];
   if (!name) {
     errors.push({ name: 'required' });
@@ -49,8 +49,8 @@ const createAdmin = asyncHandler(async (req, res) => {
   if (!email) {
     errors.push({ email: 'required' });
   }
-  if (!ContactNo) {
-    errors.push({ ContactNo: 'required' });
+  if (!contactNo) {
+    errors.push({ contactNo: 'required' });
   }
   if (!password) {
     errors.push({ password: 'required' });
@@ -69,7 +69,7 @@ const createAdmin = asyncHandler(async (req, res) => {
       const admin = new Admin({
         name: name,
         email: email,
-        ContactNo: ContactNo,
+        contactNo: contactNo,
         password: hash,
       });
       const createdAdmin = await admin.save();
@@ -102,7 +102,7 @@ const updateAdmin = asyncHandler(async (req, res) => {
     // Update the admin user properties
     admin.name = name || admin.name;
     admin.email = email || admin.email;
-    admin.ContactNo = ContactNo || admin.ContactNo;
+    admin.contactNo = contactNo || admin.contactNo;
     admin.businessRegNo = businessRegNo || admin.businessRegNo;
     admin.Address = Address || admin.Address;
     admin.password = await bcrypt.hash(password, 10);
