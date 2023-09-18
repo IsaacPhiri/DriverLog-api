@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const AdminSchema = new mongoose.Schema(
   {
-    businessName: {
+    name: {
       type: String,
       required: true,
     },
