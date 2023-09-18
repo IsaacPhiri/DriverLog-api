@@ -77,7 +77,7 @@ const signinAdmin = asyncHandler(async (req, res) => {
       } else {
         createJWT(res, admin.companyEmail, admin._id, admin.role);
 
-        return res.status(200).json('Admin Logged in successfully');
+        return res.status(200).json(admin);
       }
     }
   } catch (err) {
