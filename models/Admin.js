@@ -22,7 +22,7 @@ const AdminSchema = new mongoose.Schema(
     businessRegNo: {
       type: String,
     },
-    ContactNo: {
+    contactNo: {
       type: String,
     },
     Address: {
