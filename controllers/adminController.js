@@ -73,8 +73,16 @@ const createAdmin = asyncHandler(async (req, res) => {
         password: hash,
       });
       const createdAdmin = await admin.save();
-      createJWT(res, admin.email, admin._id, admin.role);
-      res.status(201).json(createdAdmin);
+      const token = createJWT(res, admin.email, admin._id, admin.role);
+      res.status(201).json({
+        _id: createdAdmin._id,
+        name: createdAdmin.name,
+        email: createdAdmin.email,
+        contactNo: createdAdmin.contactNo,
+        token: token,
+      },
+      { message: 'Admin Logged in successfully' }
+      );
     }
   } catch (error) {
     res.status(500);
