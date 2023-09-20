@@ -75,9 +75,14 @@ const signinAdmin = asyncHandler(async (req, res) => {
       if (!isMatch) {
         throw new Error('Incorrect Email or Password');
       } else {
-        createJWT(res, admin.email, admin._id, admin.role);
-
-        return res.status(200).json(admin);
+        const token = createJWT(res, admin.email, admin._id, admin.role);
+        return res.status(200).json({
+          _id: admin._id,
+          name: admin.name,
+          email: admin.email,
+          contactNo: admin.contactNo,
+          token: token,
+        });
       }
     }
   } catch (err) {
