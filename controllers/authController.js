@@ -82,6 +82,7 @@ const signinAdmin = asyncHandler(async (req, res) => {
           name: admin.name,
           email: admin.email,
           contactNo: admin.contactNo,
+          role: admin.role,
           token: token,
         });
       }
