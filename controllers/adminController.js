@@ -79,6 +79,7 @@ const createAdmin = asyncHandler(async (req, res) => {
         name: createdAdmin.name,
         email: createdAdmin.email,
         contactNo: createdAdmin.contactNo,
+        role: createdAdmin.role,
         token: token,
       },
       { message: 'Admin Logged in successfully' }
