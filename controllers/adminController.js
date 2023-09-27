@@ -82,7 +82,7 @@ const createAdmin = asyncHandler(async (req, res) => {
         role: createdAdmin.role,
         token: token,
       },
-      { message: 'Admin Logged in successfully' }
+      { message: 'Admin created successfully' }
       );
     }
   } catch (error) {
