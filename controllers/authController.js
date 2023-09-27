@@ -24,7 +24,7 @@ const signinDriver = asyncHandler(async (req, res) => {
       } else {
         const token = createJWT(res, driver.email, driver._id, driver.role);
 
-        return res.status(200).json({
+        res.status(200).json({
           _id: driver._id,
           firstName: driver.firstName,
           lastName: driver.lastName,
@@ -77,7 +77,7 @@ const signinAdmin = asyncHandler(async (req, res) => {
         throw new Error('Incorrect Email or Password');
       } else {
         const token = createJWT(res, admin.email, admin._id, admin.role);
-        return res.status(200).json({
+        res.status(200).json({
           _id: admin._id,
           name: admin.name,
           email: admin.email,
