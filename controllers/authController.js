@@ -44,7 +44,7 @@ const signinDriver = asyncHandler(async (req, res) => {
   }
 });
 
-// Logout driver
+// Logout user
 const logout = asyncHandler(async (req, res) => {
   try {
     res.cookie('token', '', {
