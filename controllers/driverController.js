@@ -66,7 +66,6 @@ const createDriver = asyncHandler(async (req, res) => {
         homeAddress,
         licenseExpiryDate,
         password,
-        password_confirmation
     } = req.body;
     let errors = [];
     if (!firstName) {
@@ -99,17 +98,7 @@ const createDriver = asyncHandler(async (req, res) => {
     if (!password) {
         errors.push({ password: "required" });
     }
-    if (!password_confirmation) {
-        errors.push({
-            password_confirmation: "required",
-        });
-    }
-    if (password !== password_confirmation) {
-        errors.push({ password: "passwords don't match" });
-    }
-    if (errors.length > 0) {
-        return res.status(422).json({ errors: errors });
-    }
+    
     const existingDriver = await Driver.findOne({ email: email });
         if (existingDriver) {
             res.status(400);
