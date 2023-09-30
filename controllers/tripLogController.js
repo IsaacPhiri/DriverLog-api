@@ -44,8 +44,7 @@ const createTripLog = asyncHandler(async (req, res) => {
       if (
         !req.body.origin ||
         !req.body.startMileage ||
-        !req.body.purpose ||
-        !req.body.vehicle
+        !req.body.purpose
       ) {
         return res.status(400).json({ error: 'Please fill in all fields' });
       }
@@ -64,7 +63,6 @@ const createTripLog = asyncHandler(async (req, res) => {
         origin: req.body.origin,
         startMileage: req.body.startMileage,
         purpose: req.body.purpose,
-        vehicle: req.body.vehicle,
         driver: req.user.id,
       });
 
