@@ -8,8 +8,8 @@ const createJWT = (res, email, userId, role) => {
 
   res.cookie('token', token, {
     httpOnly: true,
-    secure: true,
-    samesite: 'none',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'none',
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
   return token;
