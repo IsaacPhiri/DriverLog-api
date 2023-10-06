@@ -22,8 +22,7 @@ const TripLogSchema = new mongoose.Schema(
       ref: 'Driver'
     },
     vehicle: { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'Vehicle'
+      type: String,
     },
     endLng: { 
       type: Number
