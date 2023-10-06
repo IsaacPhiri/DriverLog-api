@@ -135,16 +135,16 @@ const createTripLog = asyncHandler(async (req, res) => {
           res.status(500).json({ error: 'Internal server error' });
         }
 
-        try {
-          const vehicle = await Vehicle.findById(req.body.vehicle);
-          if (!vehicle) {
-            return res.status(404).json({ error: 'No vehicle found' });
-          }
-          updatedTripLog.vehicle = vehicle;
-        } catch (err) {
-          console.log(err);
-          res.status(500).json({ error: 'Internal server error' });
-        }
+        // try {
+        //   const vehicle = await Vehicle.findById(req.body.vehicle);
+        //   if (!vehicle) {
+        //     return res.status(404).json({ error: 'No vehicle found' });
+        //   }
+        //   updatedTripLog.vehicle = vehicle;
+        // } catch (err) {
+        //   console.log(err);
+        //   res.status(500).json({ error: 'Internal server error' });
+        // }
 
         const adminEmail = updatedTripLog.admin.email;
         await emailNotification(adminEmail, updatedTripLog, req);
@@ -157,7 +157,7 @@ const createTripLog = asyncHandler(async (req, res) => {
           destinationAddress: updatedTripLog.destinationAddress,
           purpose: updatedTripLog.purpose,
           driver: updatedTripLog.driver.firstName,
-          vehicle: updatedTripLog.vehicle.licensePlate,
+          vehicle: updatedTripLog.vehicle,
           comments: updatedTripLog.comments,
           distance: updatedTripLog.distance,
           message: 'Successfully logged trip',
