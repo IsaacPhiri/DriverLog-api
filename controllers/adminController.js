@@ -6,7 +6,7 @@ const createJWT = require('../utils/auth');
 // Description: Controller for admin user
 const getAdmin = asyncHandler(async (req, res) => {
   try {
-    const admin = await Admin.findById(req.params.id);
+    const admin = await Admin.findById(req.params.id).select('-password');
     if (!admin) {
       return res.status(404).throw(new Error('Admin user not found'));
     }
@@ -32,7 +32,7 @@ const getAdminProfile = asyncHandler(async (req, res) => {
 
 const getAdmins = asyncHandler(async (req, res) => {
   try {
-    const admins = await Admin.find();
+    const admins = await Admin.find().select('-password');
     res.json(admins);
   } catch (error) {
     res.status(500);
