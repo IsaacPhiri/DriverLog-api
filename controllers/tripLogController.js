@@ -49,7 +49,7 @@ const getTripLog = asyncHandler(async (req, res) => {
 });
 
 const createTripLog = asyncHandler(async (req, res) => {
-  if (!req.body.destinationAddress) {
+  if (!req.body.comments) {
     // start trip
     try {
       if (
@@ -71,6 +71,7 @@ const createTripLog = asyncHandler(async (req, res) => {
 
       const newTripLog = new TripLog({
         originAddress: req.body.originAddress,
+        destinationAddress: req.body.destinationAddress,
         startLng: req.body.startLng,
         startLat: req.body.startLat,
         purpose: req.body.purpose,
@@ -89,7 +90,7 @@ const createTripLog = asyncHandler(async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   } else {
-    if (req.body.destinationAddress) {
+    if (req.body.comments) {
       // end trip
       try {
         // Retrieve the triplog id from the session variable rideId
