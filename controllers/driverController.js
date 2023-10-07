@@ -104,7 +104,9 @@ const createDriver = asyncHandler(async (req, res) => {
     
     const existingDriver = await Driver.findOne({ email: email });
         if (existingDriver) {
-            res.status(400);
+            res.status(400).json({
+                message: 'Email already exists'
+            });
             throw new Error('Email already exists');
         }
 
