@@ -105,7 +105,6 @@ const createTripLog = asyncHandler(async (req, res) => {
         if (triplog.driver?.toString() !== req.user.id) {
           return res.status(401).json({ error: 'Unauthorized' });
         }
-        triplog.destinationAddress = req.body.destinationAddress;
         triplog.endLng = req.body.endLng;
         triplog.endLat = req.body.endLat;
         triplog.vehicle = req.body.vehicle,
