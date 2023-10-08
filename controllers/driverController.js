@@ -9,7 +9,7 @@ const getDriver = asyncHandler(async (req, res) => {
         const driver = await Driver.findById(req.params.id)
         .populate('admin');
         if (!driver) {
-            return res.status(404).json({ error: 'Driver not found' });
+            res.status(404).json({ error: 'Driver not found' });
         }
         res.json(driver);
     } catch (error) {
@@ -49,7 +49,6 @@ const getDriverProfile = asyncHandler(async (req, res) => {
         } = await Driver.findById(req.user.id);
 
         if (!driver) {
-          res.status(404);
           throw new Error('Driver not found');
         }
         res.json(driver);
@@ -104,7 +103,7 @@ const createDriver = asyncHandler(async (req, res) => {
     
     const existingDriver = await Driver.findOne({ email: email });
         if (existingDriver) {
-            res.status(400).json({ message: 'Email already exists' });
+            throw new Error('Driver with this email already exists');
         }
 
     try {
