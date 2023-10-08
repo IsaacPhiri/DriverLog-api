@@ -155,7 +155,7 @@ const createTripLog = asyncHandler(async (req, res) => {
         await emailNotification(adminEmail, updatedTripLog, req);
 
         // Remove ride id from local storage
-        res.setHeader('Set-Cookie', 'rideId=; Max-Age=0');
+        res.clearCookie('rideId', { path: '/', domain: 'driverlog-api.onrender.com' });
       
 
         res.status(201).json({
