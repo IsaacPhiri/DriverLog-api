@@ -4,7 +4,11 @@ const asyncHandler = require('express-async-handler');
 const getVehicles = asyncHandler(async (req, res) => {
   try {
     const vehicles = await Vehicle.find();
-    res.json(vehicles);
+    if (!vehicles) {
+      res.status(404).json({ error: 'No vehicles found' });
+    } else {
+      res.json(vehicles);
+    }
   } catch (err) {
     res.status(500);
     throw new Error('Internal server error');
@@ -35,7 +39,7 @@ const createVehicle = asyncHandler(async (req, res) => {
       licensePlate,
     });
     const createdVehicle = await vehicle.save();
-    res.status(201).json(createdVehicle);
+    res.status(201).json({createdVehicle, mesaage: 'Vehicle created successfully'});
   } catch (err) {
     res.status(500);
     throw new Error('Internal server error');
