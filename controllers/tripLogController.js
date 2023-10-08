@@ -80,6 +80,8 @@ const createTripLog = asyncHandler(async (req, res) => {
       res.cookie('rideId', newTripLog.id, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'development' ? true : false,
+        sameSite: 'none',
       });
       
       const triplog = await newTripLog.save();
