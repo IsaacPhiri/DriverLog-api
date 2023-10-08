@@ -19,10 +19,6 @@ const getTripLogs = asyncHandler(async (req, res) => {
     .populate({
       path: 'driver',
       select: 'firstName lastName',
-    })
-    .populate({
-      path: 'vehicle',
-      select: 'licensePlate',
     });
     res.json({
       triplogs,
@@ -75,6 +71,7 @@ const createTripLog = asyncHandler(async (req, res) => {
         startLng: req.body.startLng,
         startLat: req.body.startLat,
         purpose: req.body.purpose,
+        vehicle: req.body.vehicle,
         driver: req.user.id,
       });
 
@@ -107,7 +104,6 @@ const createTripLog = asyncHandler(async (req, res) => {
         }
         triplog.endLng = req.body.endLng;
         triplog.endLat = req.body.endLat;
-        triplog.vehicle = req.body.vehicle,
         triplog.comments = req.body.comments;
         
         const updatedTripLog = await triplog.save();
