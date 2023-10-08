@@ -155,7 +155,8 @@ const createTripLog = asyncHandler(async (req, res) => {
         await emailNotification(adminEmail, updatedTripLog, req);
 
         // Remove ride id from local storage
-        res.clearCookie('rideId');
+        res.cookie('rideId', '', { expires: new Date(0) });
+
 
         res.status(201).json({
           originAddress: updatedTripLog.originAddress,
