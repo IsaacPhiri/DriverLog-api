@@ -155,7 +155,11 @@ const createTripLog = asyncHandler(async (req, res) => {
         await emailNotification(adminEmail, updatedTripLog, req);
 
         // Remove ride id from local storage
-        res.cookie('rideId', '', { expires: new Date(0) });
+        if (req.cookies.rideId) {
+          res.clearCookie('rideId', { path: '/'}).json({ message: 'Trip ended' });
+        } else {
+          return res.status(404).json({ error: 'No rideId found' });
+        }
 
 
         res.status(201).json({
