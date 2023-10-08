@@ -15,7 +15,7 @@ const signinDriver = asyncHandler(async (req, res) => {
     const driver = await Driver.findOne({ email: email });
 
     if (!driver) {
-      throw new Error('Driver Not Found');
+      throw new Error('Email not Found');
     } else {
       const isMatch = await bcrypt.compare(password, driver.password);
 
@@ -50,8 +50,10 @@ const logout = asyncHandler(async (req, res) => {
     res.cookie('token', '', {
       httpOnly: true,
       expires: new Date(0),
+      sameSite: 'none',
+      secure: process.env.NODE_ENV === 'development' ? true : false,
     });
-    res.status(200).json('User Logged out');
+    res.status(200).json({ message: 'User Logged out'});
   } catch (err) {
     res.status(500);
     throw new Error('Internal server error');
