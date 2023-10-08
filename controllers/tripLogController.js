@@ -156,7 +156,7 @@ const createTripLog = asyncHandler(async (req, res) => {
 
         // Remove ride id from local storage
         if (req.cookies.rideId) {
-          res.clearCookie('rideId', { path: '/'}).json({ message: 'Trip ended' });
+          res.setHeader('Set-Cookie', 'rideId=; Max-Age=0');
         } else {
           return res.status(404).json({ error: 'No rideId found' });
         }
