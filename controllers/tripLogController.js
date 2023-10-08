@@ -55,10 +55,10 @@ const createTripLog = asyncHandler(async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all fields' });
       }
 
-      // Check if the rideId session variable is already set.
-      if (!req.session.rideId) {
+      // Check if the rideId cookie variable is already set.
+      if (!req.cookies.rideId) {
         // Initialize the rideId session variable to null.
-        req.session.rideId = null;
+        req.cookies.rideId = null;
       } else {
         // If the rideId session variable is already set, then the user is already on a trip.
         // Return an error.
@@ -75,9 +75,12 @@ const createTripLog = asyncHandler(async (req, res) => {
         driver: req.user.id,
       });
 
-      // Set the session variable rideId to the triplog id
+      // Set the cookie variable rideId to the triplog id
       // This is used to identify the triplog when ending the trip
-      req.session.rideId = newTripLog._id;
+      res.cookie('rideId', newTripLog.id, {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
+        httpOnly: true,
+      });
       
       const triplog = await newTripLog.save();
       res.status(201).json(triplog);
@@ -90,8 +93,11 @@ const createTripLog = asyncHandler(async (req, res) => {
     if (req.body.comments) {
       // end trip
       try {
-        // Retrieve the triplog id from the session variable rideId
-        const rideId = req.session.rideId;
+        // Retrieve the triplog id from the cookie variable rideId
+        const rideId = req.cookies.rideId;
+        if (!rideId) {
+          return res.status(404).json({ error: 'No rideId found' });
+        }
         const triplog = await TripLog.findById(rideId);
         if (!triplog) {
           return res.status(404).json({ error: 'No triplog found' });
@@ -147,7 +153,7 @@ const createTripLog = asyncHandler(async (req, res) => {
         await emailNotification(adminEmail, updatedTripLog, req);
 
         // Remove ride id from local storage
-        req.session.rideId = null;
+        res.clearCookie('rideId');
 
         res.status(201).json({
           originAddress: updatedTripLog.originAddress,
