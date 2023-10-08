@@ -21,7 +21,7 @@ const getAdminProfile = asyncHandler(async (req, res) => {
   try {
     const admin = ({ _id, email } = await Admin.findById(req.user.id));
     if (!admin) {
-      return res.status(404).throw(new Error('Admin user not found'));
+      res.status(404).json('Admin user not found');
     }
     res.json(admin);
   } catch (error) {
@@ -62,7 +62,7 @@ const createAdmin = asyncHandler(async (req, res) => {
   try {
     const existingAdmin = await Admin.findOne({ email: email});
     if (existingAdmin) {
-      return res.status(400).json({ error: 'Admin user with this email already exists' });
+      res.status(400).json({ error: 'Admin user with this email already exists' });
     } else {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
@@ -105,7 +105,7 @@ const updateAdmin = asyncHandler(async (req, res) => {
     // Find the admin user by ID
     const admin = await Admin.findById(id);
     if (!admin) {
-      return res.status(404).throw(new Error('Admin user not found'));
+      res.status(404).json('Admin user not found');
     }
 
     // Update the admin user properties
@@ -119,7 +119,15 @@ const updateAdmin = asyncHandler(async (req, res) => {
     // Save the updated admin user to the database
     await admin.save();
 
-    res.json({ message: 'Admin user updated successfully' });
+    res.status(200).json({
+      _id: admin._id,
+      name: admin.name,
+      email: admin.email,
+      contactNo: admin.contactNo,
+      businessRegNo: admin.businessRegNo,
+      Address: admin.Address,
+      message: 'Admin user updated successfully',
+    });
   } catch (error) {
     res.status(500);
     throw new Error('Internal server error');
