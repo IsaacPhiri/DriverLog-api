@@ -98,7 +98,7 @@ const createTripLog = asyncHandler(async (req, res) => {
         // Retrieve the triplog id from the cookie variable rideId
         const rideId = req.cookies.rideId;
         if (!rideId) {
-          return res.status(404).json({ error: 'No rideId found' });
+          return res.status(404).json({ error: 'No ride found' });
         }
         const triplog = await TripLog.findById(rideId);
         if (!triplog) {
@@ -117,7 +117,6 @@ const createTripLog = asyncHandler(async (req, res) => {
         
         const updatedTripLog = await triplog.save();
 
-        // Send email notification to admin
         try {
           const driver = await Driver.findById(req.user.id);
           if (!driver) {
@@ -151,13 +150,27 @@ const createTripLog = asyncHandler(async (req, res) => {
         //   res.status(500).json({ error: 'Internal server error' });
         // }
 
-        const adminEmail = updatedTripLog.admin.email;
-        await emailNotification(adminEmail, updatedTripLog, req);
+        // Send email notification to admin
+        try {
+          const adminEmail = updatedTripLog.admin.email;
+          await emailNotification(adminEmail, updatedTripLog, req);
+          res.status(201).json({ message: 'Email notification sent to admin.' });
+        } catch (err) {
+          res.status(500).json({ error: 'Internal server error' });
+        }
 
         // Remove ride id from local storage
-        res.clearCookie('rideId', { path: '/', domain: 'driverlog-api.onrender.com' });
+        try {
+          res.cookie('rideId', '', {
+            httpOnly: true,
+            expires: new Date(0),
+            sameSite: 'none',
+            secure: process.env.NODE_ENV === 'development' ? true : false,
+          });
+        } catch (err) {
+          res.status(500).json({ error: 'Internal server error' });
+        }
       
-
         res.status(201).json({
           originAddress: updatedTripLog.originAddress,
           destinationAddress: updatedTripLog.destinationAddress,
