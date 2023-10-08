@@ -105,6 +105,7 @@ const createTripLog = asyncHandler(async (req, res) => {
         triplog.endLng = req.body.endLng;
         triplog.endLat = req.body.endLat;
         triplog.comments = req.body.comments;
+        triplog.status = 'completed';
         
         const updatedTripLog = await triplog.save();
 
@@ -156,6 +157,7 @@ const createTripLog = asyncHandler(async (req, res) => {
           vehicle: updatedTripLog.vehicle,
           comments: updatedTripLog.comments,
           distance: updatedTripLog.distance,
+          status: updatedTripLog.status,
           message: 'Successfully logged trip',
         });
       } catch (err) {
